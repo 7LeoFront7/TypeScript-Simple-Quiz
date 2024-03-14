@@ -1,4 +1,11 @@
-export const questions = [
+type questionType = {
+	id: number,
+	question: string,
+	options: string[],
+	answer: string
+}
+
+export const questions: questionType[] = [
 	{
 		id: 1,
 		question: 'Как меня зовут?',
@@ -19,4 +26,3 @@ export const questions = [
 	},
 ]
 
-export type QuestionsType = typeof questions

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { questions } from '../qwiz'
+import Option from './Option'
 import styles from './Qwiz.module.css'
 
-const lengthQuestions = questions.length
+const lengthQuestions: number = questions.length
 
 export default function Qwiz() {
 	const [step, setStep] = useState(0)
@@ -13,9 +14,16 @@ export default function Qwiz() {
 		return (
 			<div key={questions[step].id} className={styles.qwiz}>
 				<div className={styles.qwiz__header}>Вы прошли квиз!</div>
-				<div>Правильных ответов: {answerTrue} из {lengthQuestions}</div>
+				<div className={styles.qwiz__info}>Правильных ответов: {answerTrue} из {lengthQuestions}</div>
+				<button onClick={restartQwiz} className={styles.button}>Начать заново</button>
 			</div>
 		)
+	}
+
+	function restartQwiz() {
+		setStep(0)
+		setAnswerTrue(0)
+		setReslut(false)
 	}
 
 	function nextQuestion(event: any) {
@@ -32,12 +40,11 @@ export default function Qwiz() {
 	return (
 		<>
 			<div key={questions[step].id} className={styles.qwiz}>
-				<div className={styles.qwiz__header}>Вопрос {questions[step].id}: {questions[step].question}</div>
+				<div className={styles.qwiz__header}>Вопрос {questions[step].id}</div>
+				<div className={styles.qwiz__info}>{questions[step].question}</div>
 				<ul>
 					{questions[step].options.map((option) => (
-						<li key={option} className={styles.item}>
-							<button id={option} onClick={nextQuestion} className={styles.button}>{option}</button>
-						</li>
+						<Option key={option} nextQuestion={nextQuestion} option={option} />
 					))}
 				</ul>
 			</div>
